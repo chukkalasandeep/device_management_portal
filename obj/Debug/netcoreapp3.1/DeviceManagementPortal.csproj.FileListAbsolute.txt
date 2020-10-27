@@ -7,7 +7,6 @@ D:\Excercise Projects\DeviceManagementPortal\bin\Debug\netcoreapp3.1\DeviceManag
 D:\Excercise Projects\DeviceManagementPortal\bin\Debug\netcoreapp3.1\DeviceManagementPortal.runtimeconfig.dev.json
 D:\Excercise Projects\DeviceManagementPortal\bin\Debug\netcoreapp3.1\DeviceManagementPortal.dll
 D:\Excercise Projects\DeviceManagementPortal\bin\Debug\netcoreapp3.1\DeviceManagementPortal.pdb
-D:\Excercise Projects\DeviceManagementPortal\obj\Debug\netcoreapp3.1\DeviceManagementPortal.csprojAssemblyReference.cache
 D:\Excercise Projects\DeviceManagementPortal\obj\Debug\netcoreapp3.1\DeviceManagementPortal.AssemblyInfoInputs.cache
 D:\Excercise Projects\DeviceManagementPortal\obj\Debug\netcoreapp3.1\DeviceManagementPortal.AssemblyInfo.cs
 D:\Excercise Projects\DeviceManagementPortal\obj\Debug\netcoreapp3.1\DeviceManagementPortal.RazorTargetAssemblyInfo.cache
