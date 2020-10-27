@@ -14,10 +14,14 @@ namespace DeviceManagementPortal.Controllers
     public class DeviceBackendController : ControllerBase
     {
         private readonly IServiceDeviceBackend _serviceDeviceBackend;
+        private readonly IServiceDevice _serviceDevice;
+        private readonly IServiceBackend _serviceBackend;
         private readonly ILogger<DeviceBackendController> _logger;
-        public DeviceBackendController(IServiceDeviceBackend serviceDeviceBackend, ILogger<DeviceBackendController> logger)
+        public DeviceBackendController(IServiceDeviceBackend serviceDeviceBackend, IServiceDevice serviceDevice, IServiceBackend serviceBackend, ILogger<DeviceBackendController> logger)
         {
             _serviceDeviceBackend = serviceDeviceBackend;
+            _serviceDevice = serviceDevice;
+            _serviceBackend = serviceBackend;
             _logger = logger;
         }
 
@@ -26,8 +30,13 @@ namespace DeviceManagementPortal.Controllers
         {
             try
             {
-                var data = _serviceDeviceBackend.List();
-
+                var mappings = _serviceDeviceBackend.List();
+                var devices = _serviceDevice.List();
+                var backends = _serviceBackend.List();
+                var data = (from db in mappings
+                            join d in devices on db.DeviceId equals d.Id
+                            join b in backends on db.BackendId equals b.Id
+                            select new { Id = db.Id, DeviceId = db.DeviceId, BackendId = db.BackendId, Imei = d.Imei, BackendName = b.Name }).ToList();
                 return Ok(data);
             }
             catch (Exception ex)
@@ -42,7 +51,13 @@ namespace DeviceManagementPortal.Controllers
         {
             try
             {
-                var data = _serviceDeviceBackend.List().Where(i=>i.Id==id);                
+                var mappings = _serviceDeviceBackend.List().Where(i => i.Id == id);
+                var devices = _serviceDevice.List().Where(i => i.Id == id);
+                var backends = _serviceBackend.List();
+                var data = (from db in mappings
+                            join d in devices on db.DeviceId equals d.Id
+                            join b in backends on db.BackendId equals b.Id
+                            select new { Id = db.Id, DeviceId = db.DeviceId, BackendId = db.BackendId, Imei = d.Imei, BackendName = b.Name }).ToList();
 
                 return Ok(data);
             }
@@ -51,9 +66,9 @@ namespace DeviceManagementPortal.Controllers
                 return BadRequest(ex);
             }
         }
-        
 
-        [HttpPost]        
+
+        [HttpPost]
         public IActionResult Post([FromBody] DeviceBackendDTO _deviceBackendDTO)
         {
             try
@@ -84,7 +99,7 @@ namespace DeviceManagementPortal.Controllers
             }
         }
 
-        
+
         [HttpDelete("{id}")]
         public IActionResult Delete(Int32 id)
         {
